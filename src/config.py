@@ -38,3 +38,7 @@ PRODUCT_BRANDS = [
     "Uniqlo",
     "Adidas"
 ]
+
+# Logging Configuration
+EMBED_PRODUCTS_LOG_FILE = "logs/embed_products.log"
+INGEST_EMBEDDINGS_LOG_FILE = "logs/ingest_embeddings.log"
