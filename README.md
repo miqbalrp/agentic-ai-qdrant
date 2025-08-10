@@ -78,19 +78,21 @@ The app will open at `http://localhost:8501`
 
 ## 💬 Usage Examples
 
-Try these natural language queries:
+Start a conversation with the shopping assistant by trying:
 
 - **"I need a blue dress for a wedding"**
 - **"Show me comfortable jeans from Levi's"** 
 - **"Looking for a warm winter sweater under $50"**
-- **"Athletic wear for running"**
-- **"Casual shirts in medium size"**
+- **"What about something in red instead?"**
+- **"Can you show me similar items but cheaper?"**
+
+The assistant will help you find products and answer follow-up questions in a natural conversation.
 
 ## 📁 Project Structure
 
 ```
 agentic-ai-qdrant/
-├── Main.py                    # Main Streamlit app (Shopping Assistant)
+├── Main.py                    # Main Streamlit chat interface
 ├── pages/
 │   └── Product_Catalog.py     # Browse all products page
 ├── src/
@@ -103,6 +105,7 @@ agentic-ai-qdrant/
 │   └── product_catalog.json   # 100 clothing products
 ├── embeddings/                # Generated embedding files
 ├── requirements.txt           # Python dependencies
+├── LICENSE                    # MIT License
 └── .env.example               # Environment template
 ```
 
