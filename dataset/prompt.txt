@@ -1,0 +1,59 @@
+Create a comprehensive e-commerce clothing dataset with 100 products in JSON format. Follow these specifications:
+
+**STRUCTURE:**
+Each product must have these exact fields:
+- id: Sequential integer (1-100)
+- name: Product name (2-4 words)
+- category: One of ["dresses", "pants", "shirts", "sweaters", "t-shirts", "skirts", "jackets"]
+- brand: One of ["Zara", "Levi's", "H&M", "Uniqlo", "Adidas"] (with occasional premium brands like Patagonia, Carhartt)
+- color: Descriptive color (e.g., "Dark Blue", "Sage Green", "Burgundy", "Navy/White")
+- size: Array of available sizes (mix of ["XS", "S", "M", "L", "XL", "XXL"] and numeric ["26", "28", "30", "32", "34", "36", "38"])
+- material: Realistic fabric composition (e.g., "100% Cotton", "98% Cotton, 2% Elastane", "85% Recycled Polyester, 15% Elastane")
+- price: Float between $12.99 - $149.99, realistic for brand and item type
+- description: 2-3 sentences (50-100 words) with features, fit, styling suggestions
+
+**BRAND CHARACTERISTICS:**
+- Zara: Fashion-forward, trendy, contemporary ($25-150)
+- H&M: Affordable, diverse styles, accessible fashion ($12-80)
+- Uniqlo: Quality basics, functional wear, minimalist ($15-100)
+- Levi's: Denim heritage, casual classics, authentic ($30-90)
+- Adidas: Athletic, sporty, performance wear ($25-75)
+
+**CATEGORY DISTRIBUTION (aim for roughly equal):**
+- Dresses: Summer, maxi, midi, wrap, cocktail, evening, bodycon, slip, shirt, sweater dresses
+- Pants: Jeans (slim, straight), leggings, chinos, cargo, palazzo, culottes, track pants, sweatpants
+- Shirts: Button-up, flannel, Oxford, chambray, Cuban collar, henley, polo, dress shirts
+- Sweaters: Pullovers, cardigans, hoodies, turtlenecks, cable knit, cashmere, oversized, zip-up
+- T-shirts: Basic tees, graphic tees, tank tops, long sleeve, crop tops, v-neck, sports bras
+- Skirts: Mini, midi, maxi, A-line, pencil, pleated, wrap, denim, leather, tennis skirts
+- Jackets: Denim, leather, blazers, bombers, puffer, trench, varsity, moto, utility jackets
+
+**COLOR VARIETY:**
+Use diverse colors including basics (black, white, navy, gray) and fashion colors (burgundy, sage green, mustard, coral, emerald, wine red, turquoise). Include patterns like "Navy/White", "Floral Print", "Green/Navy".
+
+**MATERIAL AUTHENTICITY:**
+- Cotton: 100% Cotton, Cotton blends, Organic Cotton, Supima Cotton
+- Denim: 100% Cotton Denim, with stretch (98% Cotton, 2% Elastane)
+- Athletic: Recycled Polyester, Polyester/Elastane blends, moisture-wicking fabrics
+- Luxury: Cashmere, Merino Wool, Alpaca blends, Genuine Leather
+- Casual: Cotton/Polyester blends, Viscose, Linen, Fleece
+
+**PRICING LOGIC:**
+- Basic tees: $12-25
+- Casual items: $25-50
+- Premium basics: $40-80
+- Outerwear: $60-150
+- Luxury materials (cashmere, leather): $80-150
+
+**DESCRIPTION FORMULA:**
+1. Opening: Describe the item's key characteristic (e.g., "Classic", "Trendy", "Cozy", "Elegant")
+2. Features: Mention 2-3 specific details (neckline, fit, closure, special features)
+3. Styling/Occasion: Suggest when/how to wear it
+
+**EXAMPLES:**
+"Lightweight puffer jacket with down filling. Features hood and multiple pockets. Warm and practical for cold weather conditions."
+
+"Romantic tiered skirt with vibrant floral print and flowing layers. Features elastic waistband and midi length. Perfect for bohemian and feminine styling."
+
+**FORMAT:**
+Output as a valid JSON array starting with [ and ending with ]. Each product should be properly formatted with all fields included. Ensure realistic variety in all attributes while maintaining authentic brand positioning and pricing.

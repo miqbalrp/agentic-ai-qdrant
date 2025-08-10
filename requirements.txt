@@ -1,0 +1,7 @@
+pandas
+python-dotenv
+pydantic
+openai
+openai-agents
+qdrant-client
+streamlit
