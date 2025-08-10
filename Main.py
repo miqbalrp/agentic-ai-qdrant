@@ -2,67 +2,114 @@ import streamlit as st
 import asyncio
 import time
 
+import src.shopping_agent as shopping_agent
+
 st.set_page_config(
-    page_title="Shopping Assistant",
+    page_title="Shopping Chat Assistant",
     page_icon="🛍️",
-    layout="centered"
+    layout="wide"
 )
+
+# Initialize session state for chat history
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
+if 'is_processing' not in st.session_state:
+    st.session_state.is_processing = False
 
 # Header
-st.title("🛍️ AI Shopping Assistant")
-st.markdown("Find the perfect clothing items with AI-powered search")
+st.title("🛍️ AI Shopping Chat Assistant")
+st.markdown("Have a conversation with your personal shopping assistant")
 
 # Example queries for inspiration
-with st.expander("💡 Example searches"):
+with st.expander("💡 Example conversations"):
     st.markdown("""
     - "I need a blue dress for a wedding"
-    - "Show me comfortable jeans from Levi's"
-    - "Looking for a warm winter sweater"
-    - "Casual shirts under $40"
-    - "Athletic wear for running"
+    - "Show me comfortable jeans from Levi's"  
+    - "Looking for a warm winter sweater under $50"
+    - "What about something in red instead?"
+    - "Can you show me similar items but cheaper?"
     """)
 
-# Main search interface
-user_query = st.text_input(
-    "What are you looking for?",
-    placeholder="Describe what you want to find...",
-    help="Try being specific about color, brand, style, or occasion"
+# Display chat history
+st.markdown("### Conversation")
+chat_container = st.container()
+
+with chat_container:
+    if st.session_state.chat_history:
+        for i, message in enumerate(st.session_state.chat_history):
+            if message['role'] == 'user':
+                with st.chat_message("user"):
+                    st.write(message['content'])
+            else:
+                with st.chat_message("assistant"):
+                    st.write(message['content'])
+    else:
+        st.markdown("*Start a conversation by typing your question below...*")
+
+# Chat input
+user_input = st.chat_input(
+    "Ask me about clothing items...",
+    disabled=st.session_state.is_processing
 )
 
-# Search button with better styling
-if st.button("🔍 Search", type="primary", use_container_width=True):
-    if user_query.strip():
-        with st.spinner("Searching our products..."):
+# Process new message
+if user_input and not st.session_state.is_processing:
+    # Add user message to chat history
+    st.session_state.chat_history.append({
+        'role': 'user',
+        'content': user_input
+    })
+    
+    # Set processing state
+    st.session_state.is_processing = True
+    
+    # Display user message immediately
+    with st.chat_message("user"):
+        st.write(user_input)
+    
+    # Show typing indicator and process
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
             try:
-                # Import here to avoid issues if module doesn't exist
-                import src.shopping_agent as shopping_agent
+                # Create conversation context by joining recent messages
+                conversation_context = ""
+                if len(st.session_state.chat_history) > 1:
+                    # Include last few messages for context
+                    recent_messages = st.session_state.chat_history[-3:]  # Last 3 messages
+                    for msg in recent_messages[:-1]:  # Exclude the current message
+                        if msg['role'] == 'user':
+                            conversation_context += f"User: {msg['content']}\n"
+                        else:
+                            conversation_context += f"Assistant: {msg['content']}\n"
+                    conversation_context += f"User: {user_input}"
+                else:
+                    conversation_context = user_input
                 
-                # Run the async function
-                result = asyncio.run(shopping_agent.run_agent(user_query))
+                # Run the async function with context
+                result = asyncio.run(shopping_agent.run_agent(conversation_context))
                 
-                # Display results
-                st.success("Found results!")
-                st.markdown("### Results:")
+                # Display assistant response
                 st.write(result)
                 
-            except ImportError:
-                st.error("Shopping agent module not found. Please check your setup.")
+                # Add assistant response to chat history
+                st.session_state.chat_history.append({
+                    'role': 'assistant', 
+                    'content': result
+                })
             except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
-    else:
-        st.warning("⚠️ Please enter a search query.")
-
-# Recent searches (simple session state)
-if 'recent_searches' not in st.session_state:
-    st.session_state.recent_searches = []
-
-# Add current search to recent searches
-if user_query and user_query.strip() and st.button:
-    if user_query not in st.session_state.recent_searches:
-        st.session_state.recent_searches.insert(0, user_query)
-        # Keep only last 5 searches
-        st.session_state.recent_searches = st.session_state.recent_searches[:5]
+                error_msg = f"An error occurred: {str(e)}"
+                st.error(error_msg)
+                st.session_state.chat_history.append({
+                    'role': 'assistant',
+                    'content': f"❌ {error_msg}"
+                })
+    
+    # Reset processing state
+    st.session_state.is_processing = False
+    
+    # Rerun to update the interface
+    st.rerun()
 
 # Footer
 st.markdown("---")
-st.markdown("*Powered by [OpenAI API](https://openai.com/) • [OpenAI Agents SDK](https://github.com/openai/openai-agents) • [Qdrant](https://qdrant.tech/) • [Streamlit](https://streamlit.io/)")
+st.markdown("*Powered by [OpenAI API](https://openai.com/) • [OpenAI Agents SDK](https://github.com/openai/openai-agents) • [Qdrant](https://qdrant.tech/) • [Streamlit](https://streamlit.io/)*")
