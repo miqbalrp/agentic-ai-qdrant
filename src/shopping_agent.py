@@ -1,20 +1,39 @@
 from agents import Agent, Runner, function_tool
+import sys
+import os
+
+from pydantic import BaseModel, Field
+from typing import Literal, Optional
+
+# Add parent directory to path to import config
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.semantic_search import search_product
 
+# Define the input model for query filters
+class QueryFilters(BaseModel):
+    brand: Optional[Literal["Zara", "Levi's", "H&M", "Uniqlo", "Adidas"]] = Field(None, description="Filter by brand")
+    category: Optional[Literal["dresses", "pants", "shirts", "sweaters", "t-shirts", "skirts", "jackets"]] = Field(None, description="Filter by category")
+    price_min: Optional[float] = Field(None, description="Minimum price filter")
+    price_max: Optional[float] = Field(None, description="Maximum price filter")
+
 @function_tool
-def search_qdrant(query: str, top_k: int = 5, score_threshold: float = 0.2) -> list:
+def search_qdrant(query: str, filters: QueryFilters = QueryFilters(), top_k: int = 5, score_threshold: float = 0.2) -> list:
     """
     Search for clothing products based on a natural language query.
     
     Args:
         query (str): The search query.
+        filters (QueryFilters): Optional filters for brand, category, price range, etc.
         top_k (int): Number of results to return.
         score_threshold (float): Minimum similarity score to include in results.
-    
     Returns:
         list: List of matching products with details.
     """
-    return search_product(query, top_k, score_threshold)
+
+    # Convert QueryFilters to dictionary, excluding None values
+    filters_dict = filters.model_dump(exclude_none=True)
+    
+    return search_product(query=query, top_k=top_k, score_threshold=score_threshold, filters=filters_dict)
 
 shopping_agent = Agent(
     name="Shopping Agent",

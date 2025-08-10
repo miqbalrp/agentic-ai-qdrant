@@ -19,3 +19,22 @@ EMBEDDING_FILE = "embeddings/product_catalog.npy"
 
 # Embedding Model Configuration
 EMBEDDING_MODEL = "text-embedding-3-small"
+
+# Dataset Categories and Brands
+PRODUCT_CATEGORIES = [
+    "dresses",
+    "pants", 
+    "shirts",
+    "sweaters",
+    "t-shirts",
+    "skirts",
+    "jackets"
+]
+
+PRODUCT_BRANDS = [
+    "Zara",
+    "Levi's", 
+    "H&M",
+    "Uniqlo",
+    "Adidas"
+]
