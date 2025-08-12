@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 from datetime import datetime
+import time
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -70,12 +71,29 @@ try:
         logger.info(f"Collection '{qdrant_collection_name}' deleted successfully")
 
     logger.info(f"Creating new collection '{qdrant_collection_name}' with {vector_dimension} dimensions...")
-    client.create_collection(
-        collection_name=qdrant_collection_name,
-        vectors_config=models.VectorParams(size=vector_dimension, distance=models.Distance.COSINE),
-    )
-    logger.info(f"Collection '{qdrant_collection_name}' created successfully")
-    
+    try:
+        client.create_collection(
+            collection_name=qdrant_collection_name,
+            vectors_config=models.VectorParams(size=vector_dimension, distance=models.Distance.COSINE),
+        )
+        logger.info(f"Collection '{qdrant_collection_name}' created successfully")
+    except Exception as ce:
+        if "timed out" in str(ce).lower():
+            logger.error("Timed out while creating collection. Polling for collection availability...")
+            start_wait = time.time()
+            while time.time() - start_wait < 60:
+                try:
+                    if client.collection_exists(qdrant_collection_name):
+                        logger.info(f"Collection '{qdrant_collection_name}' is now available")
+                        break
+                except Exception as e:
+                    pass # Ignore errors while polling
+                time.sleep(1)
+            else:
+                raise TimeoutError("Timed out waiting for collection to become available")
+        else:
+            raise
+            
 except Exception as e:
     logger.error(f"Failed to create collection: {str(e)}")
     sys.exit(1)  
