@@ -4,11 +4,13 @@ import json
 st.title("👗 Product Catalog")
 st.write("Browse our collection of clothing products")
 
+import src.config as CONFIG
+
 # Load data
 @st.cache_data
 def load_products():
     try:
-        with open("dataset/ecommerce_product.json", 'r') as f:
+        with open(CONFIG.DATASET_PATH, 'r') as f:
             return json.load(f)
     except Exception as e:
         st.error(f"Error loading products: {e}")
