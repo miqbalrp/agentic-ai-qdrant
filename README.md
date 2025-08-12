@@ -6,6 +6,7 @@ A simple AI-powered shopping assistant that helps users find clothing products u
 
 ### 1. Prerequisites
 - Python 3.8 or higher
+- Docker ([Get one here](https://docs.docker.com/get-started/get-docker/))
 - OpenAI API key ([Get one here](https://platform.openai.com/api-keys))
 
 ### 2. Installation
