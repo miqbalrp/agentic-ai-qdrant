@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import config as CONFIG
+import src.config as CONFIG
 
 openai_api_key = CONFIG.OPENAI_API_KEY
 embedding_model = CONFIG.EMBEDDING_MODEL

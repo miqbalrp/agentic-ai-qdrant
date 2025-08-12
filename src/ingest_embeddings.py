@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import config as CONFIG
+import src.config as CONFIG
 
 qdrant_url = CONFIG.QDRANT_URL
 qdrant_collection_name = CONFIG.QDRANT_COLLECTION_NAME
@@ -37,7 +37,7 @@ logger.info("Starting embedding ingestion process")
 logger.info(f"Connecting to Qdrant at: {qdrant_url}")
 
 try:
-    client = QdrantClient(url=qdrant_url)
+    client = QdrantClient(url=qdrant_url, timeout=60.0)
     logger.info("Successfully connected to Qdrant client")
 except Exception as e:
     logger.error(f"Failed to connect to Qdrant: {str(e)}")
