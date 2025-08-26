@@ -118,7 +118,8 @@ try:
                 "color": row["color"],
                 "material": row["material"],
                 "size": row["size"],
-                "description": row["description"]
+                "description": row["description"],
+                "url": row["url"]
             }
         )
         points.append(point)

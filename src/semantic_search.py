@@ -138,7 +138,8 @@ def search_product(query, top_k=5, score_threshold=0.2, filters=None):
                 'size': result.payload['size'],
                 'description': result.payload['description'],
                 'category': result.payload['category'],
-                'material': result.payload['material']
+                'material': result.payload['material'],
+                'url': result.payload['url']
             }
             for result in results
         ]
