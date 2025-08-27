@@ -2,7 +2,9 @@
 
 A simple AI-powered shopping assistant that helps users find clothing products using natural language queries. Built with Streamlit, Qdrant vector database, and OpenAI.
 
-![Semantic-Search-with-Agent](assets/Semantic-Search-with-Agent.png)
+<div align="center">
+  <img src="assets/Semantic-Search-with-Agent.png" alt="Streamlit Image" width="400"/>
+</div>
 
 ## 🤝 Collaboration
 
@@ -10,7 +12,9 @@ This project was developed in partnership with **[Superteams.ai](https://www.sup
 
 📖 **Featured Article**: Learn how this project was built in our detailed tutorial: [How to Build a Search-Driven Agentic AI Assistant for Ecommerce](https://www.superteams.ai/blog/how-to-build-a-search-driven-agentic-ai-assistant-for-ecommerce)
 
-![Article-Image](assets/Article-Image.png)
+<div align="center">
+  <img src="assets/Article-Image.png" alt="Article Image" width="400"/>
+</div>
 
 
 ## 🚀 Quick Start
