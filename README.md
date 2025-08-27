@@ -8,6 +8,11 @@ A simple AI-powered shopping assistant that helps users find clothing products u
 
 This project was developed in partnership with **[Superteams.ai](https://www.superteams.ai)**.
 
+📖 **Featured Article**: Learn how this project was built in our detailed tutorial: [How to Build a Search-Driven Agentic AI Assistant for Ecommerce](https://www.superteams.ai/blog/how-to-build-a-search-driven-agentic-ai-assistant-for-ecommerce)
+
+![Article-Image](assets/Article-Image.png)
+
+
 ## 🚀 Quick Start
 
 ### 1. Prerequisites
